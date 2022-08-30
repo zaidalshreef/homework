@@ -44,7 +44,7 @@ module.exports.updatePerson = function (request, res) {
 module.exports.deletePerson = function (id, res) {
     try {
         const index = people.findIndex((person) => person.id === parseInt(id))
-        if(index) throw new Error;
+        if(!index) throw new Error;
         console.log(index);
         people.splice(index, 1);
         res.send(people);
