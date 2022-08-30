@@ -24,20 +24,32 @@ module.exports.addPerson = function (data, res) {
     res.send(people);
 };
 
-module.exports.updatePerson = function (id, res) {
-    const index = people.findIndex((person) => person.id === parseInt(id))
-    person = people[index];
-    const { error, value } = schema.validate(person, { abortEarly: false, })
-  if (error)
-    return res.status(400).send({ error: error.message });
-
-  people[index] = { ...person, ...request.body }
-  res.send(people);
+module.exports.updatePerson = function (request, res) {
+    try {
+        const index = people.findIndex((person) => person.id === parseInt(request.params.id))
+        const {firstName,lastName,age,city} = people[index]
+        const { error, value } = schema.validate({firstName,lastName,age,city,...request.body}, { abortEarly: false, })
+        if (error)
+        return res.status(400).send({ error: error.message });
+    
+      people[index] = { ...people[index], ...request.body }
+      res.send(people);
+    } catch (error) {
+        res.status(404).send({ error: "Not Found" });
+    }
+   
 
 }
 
 module.exports.deletePerson = function (id, res) {
-  const index = people.findIndex((person) => person.id === parseInt(id));
-  people.splice(index, 1);
-  res.send(people);
-};
+    try {
+        const index = people.findIndex((person) => person.id === parseInt(id))
+        if(index) throw new Error;
+        console.log(index);
+        people.splice(index, 1);
+        res.send(people);
+    } catch (error){
+    res.status(404).send({ error: "Not Found" });
+}
+  
+}

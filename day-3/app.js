@@ -16,7 +16,7 @@ app.post("/people", (req, res) => {
 });
 
 app.put("/people/:id", (req, res) => {
-  updatePerson(req.params.id,res);
+  updatePerson(req,res);
 });
 
 app.delete("/people/:id", (req, res) => {
