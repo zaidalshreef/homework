@@ -1,4 +1,4 @@
-const { people } = require("./people");
+const people  = require("./people");
 const Joi = require("joi");
 let identifier = 0
 
