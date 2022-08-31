@@ -20,7 +20,7 @@ module.exports.addPerson = function (req, res) {
   if (error) 
    return res.status(400).send({ error: error.message,});
     
-    people.push({id:++identifier,...data});
+    people.push({id:++identifier,...req.body});
     res.send(people);
 };
 
@@ -45,7 +45,6 @@ module.exports.deletePerson = function (req, res) {
     try {
         const index = people.findIndex((person) => person.id === parseInt(req.params.id))
         if(!index) throw new Error;
-        console.log(index);
         people.splice(index, 1);
         res.send(people);
     } catch (error){
