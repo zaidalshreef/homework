@@ -7,20 +7,12 @@ const port = 3000;
 
 app.use(express.json());
 
-app.get("/people", (req, res) => {
-  render(res);
-});
+app.get("/people",render);
 
-app.post("/people", (req, res) => {
-    addPerson(req.body,res);
-});
+app.post("/people", addPerson);
 
-app.put("/people/:id", (req, res) => {
-  updatePerson(req,res);
-});
+app.put("/people/:id", updatePerson);
 
-app.delete("/people/:id", (req, res) => {
-  deletePerson(req.params.id,res);
-});
+app.delete("/people/:id",deletePerson);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

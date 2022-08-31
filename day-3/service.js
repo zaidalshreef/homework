@@ -11,12 +11,12 @@ const schema = Joi.object({
 
 
 
-module.exports.render = function(res){
+module.exports.render = function(req,res){
     res.send(people);
 }
 
-module.exports.addPerson = function (data, res) {
-  const { error, value } = schema.validate(data, { abortEarly: false });
+module.exports.addPerson = function (req, res) {
+  const { error, value } = schema.validate(req.body, { abortEarly: false });
   if (error) 
    return res.status(400).send({ error: error.message,});
     
@@ -24,15 +24,15 @@ module.exports.addPerson = function (data, res) {
     res.send(people);
 };
 
-module.exports.updatePerson = function (request, res) {
+module.exports.updatePerson = function (req, res) {
     try {
-        const index = people.findIndex((person) => person.id === parseInt(request.params.id))
+        const index = people.findIndex((person) => person.id === parseInt(req.params.id))
         const {firstName,lastName,age,city} = people[index]
-        const { error, value } = schema.validate({firstName,lastName,age,city,...request.body}, { abortEarly: false, })
+        const { error, value } = schema.validate({firstName,lastName,age,city,...req.body}, { abortEarly: false, })
         if (error)
         return res.status(400).send({ error: error.message });
     
-      people[index] = { ...people[index], ...request.body }
+      people[index] = { ...people[index], ...req.body }
       res.send(people);
     } catch (error) {
         res.status(404).send({ error: "Not Found" });
@@ -41,9 +41,9 @@ module.exports.updatePerson = function (request, res) {
 
 }
 
-module.exports.deletePerson = function (id, res) {
+module.exports.deletePerson = function (req, res) {
     try {
-        const index = people.findIndex((person) => person.id === parseInt(id))
+        const index = people.findIndex((person) => person.id === parseInt(req.params.id))
         if(!index) throw new Error;
         console.log(index);
         people.splice(index, 1);
