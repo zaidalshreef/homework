@@ -19,9 +19,9 @@ async function connect() {
  const app = express()
  app.use(express.json())
 
- app.use("'/'",students)
- app.use("'/'",courses)
- app.use("'/'",semester)
+ app.use("/",students)
+ app.use("/",courses)
+ app.use("/",semester)
 
  
 
