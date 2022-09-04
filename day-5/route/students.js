@@ -16,3 +16,5 @@ router
   router
   .route("/students/:id/:course")
   .put(addMark)
+
+  module.exports = router;

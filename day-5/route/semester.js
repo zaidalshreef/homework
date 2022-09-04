@@ -12,4 +12,4 @@ router
   .route("/semesters/:semester")
   .get(show)
 
-  
+  module.exports = router;

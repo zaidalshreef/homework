@@ -13,4 +13,6 @@ router
   .get(show)
   .put(update)
 
+
+  module.exports = router;
   

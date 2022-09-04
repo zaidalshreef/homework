@@ -1,5 +1,5 @@
 const Courses = require("../model/courses");
-const Semester = require("../model/semesters");
+const Semester = require("../model/semester");
 
 module.exports.index = async (req, res, next) => {
   const courses = await Courses.find({}).populate(["semester", "students"]);
@@ -15,26 +15,25 @@ module.exports.show = async (req, res, next) => {
   res.send(course);
 };
 
-module.exports.create = async (req, res, next) => {
+module.exports.create = async (req, res) => {
   const course = await Courses.create({
-    name: req.body.name,
+    Name: req.body.name,
   });
 
   res.send(course);
 };
 
 module.exports.update = async (req, res, next) => {
-    const semester = await Semester.find({name:req.body.semester})
-    const course = await Courses.findByName(req.params.course).populate([
-        "semester",
-        "students",]
-    )
-    course.semester = semester
-    semester.courses.push(course)
+  const course = await Courses.findByName(req.params.course).populate([
+    "semester",
+    "students",
+  ]);
+  const semester = await Semester.findOneAndUpdate(
+    { name: req.body.semester },
+    { $push: { courses: course } }
+  );
 
-    await course.save()
-    await Semester.save()
-  
-    res.send(course);
-  };
-  
+  await semester.save();
+
+  res.send(course);
+};
