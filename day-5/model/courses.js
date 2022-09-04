@@ -8,6 +8,7 @@ const CoursesSchema = new schema({
     students: [{type: schema.Types.ObjectId,ref:"student"}],
 })
 
+  
 
 CoursesSchema.static("findByName", function (name) { 
     return this.find({ Name: name})

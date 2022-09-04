@@ -5,19 +5,16 @@ const schema = mongoose.Schema;
 
 
 
-const StudentSchema = schema({
+const StudentSchema = new schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   courses: [
-    { mark: Number, course: { type: schema.Types.ObjectId, ref: "course" }},
+    { mark: {type: Number , default: 0}
+    ,Course: { type: schema.Types.ObjectId, ref: "course" }},
   ],
 });
 
-StudentSchema.virtual('courses', {
-  ref: 'course',
-  localField: '_id',
-  foreignField: 'author'
-});
+
 
 StudentSchema.static("findByName", function (firstname, lastname) {
   return this.find({ firstName: firstname, lastName: lastname });

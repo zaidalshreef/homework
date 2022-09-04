@@ -24,10 +24,7 @@ module.exports.create = async (req, res) => {
 };
 
 module.exports.update = async (req, res, next) => {
-  const course = await Courses.findByName(req.params.course).populate([
-    "semester",
-    "students",
-  ]);
+  const course = await Courses.findByName(req.params.course)
   const semester = await Semester.findOneAndUpdate(
     { name: req.body.semester },
     { $push: { courses: course } }
