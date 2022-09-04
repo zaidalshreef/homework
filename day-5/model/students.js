@@ -13,6 +13,12 @@ const StudentSchema = schema({
   ],
 });
 
+StudentSchema.virtual('courses', {
+  ref: 'course',
+  localField: '_id',
+  foreignField: 'author'
+});
+
 StudentSchema.static("findByName", function (firstname, lastname) {
   return this.find({ firstName: firstname, lastName: lastname });
 });

@@ -4,12 +4,12 @@ const {index,show,create,update} = require("../controller/courses")
 
 
 router
-  .route("/courses")
+  .route("/")
   .get(index)
   .post(create)
 
   router
-  .route("/courses/:course")
+  .route("/:course")
   .get(show)
   .put(update)
 

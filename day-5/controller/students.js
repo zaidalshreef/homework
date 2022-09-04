@@ -2,7 +2,7 @@ const Courses = require("../model/courses");
 const Students = require("../model/students");
 
 module.exports.index = async (req, res, next) => {
-  const students = await Students.find({}).populate("courses");
+  const students = await Students.find({})
   res.send(students);
 };
 
@@ -22,14 +22,14 @@ module.exports.create = async (req, res, next) => {
 };
 
 module.exports.addCourses = async (req, res, next) => {
-    const student = await Students.findById(req.params.id)
-    const courses = await req.body.courses.map(async (course) => {
-        student.courses.push({mark: 0, course });
-      return  await Courses.findOneAndUpdate({Name:course},{$push:{students : student}})
-    }) 
+  const student = await Students.findById(req.params.id)
+  const courses = await req.body.courses.map(async (course) => {
+    return  await Courses.findOneAndUpdate({Name:course},{$push:{students : student}})
+  }) 
+  student.courses = [...courses,...student.courses]
+
 
     await student.save()
-    await courses.save()
   
     res.send(student);
   };

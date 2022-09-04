@@ -4,17 +4,17 @@ const {index,show,create,addCourses,addMark} = require("../controller/students")
 
 
 router
-  .route("/students")
+  .route("/")
   .get(index)
   .post(create)
 
   router
-  .route("/students/:id")
+  .route("/:id")
   .get(show)
   .put(addCourses)
 
   router
-  .route("/students/:id/:course")
+  .route("/:id/:course")
   .put(addMark)
 
   module.exports = router;
