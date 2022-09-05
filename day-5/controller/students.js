@@ -8,7 +8,7 @@ module.exports.index = async (req, res, next) => {
 };
 
 module.exports.show = async (req, res, next) => {
-  const student = await Students.findById(req.params.id).populate("courses");
+  const student = await Students.findById(req.params.id).populate("Course");
   res.send(student);
 };
 
@@ -22,7 +22,9 @@ module.exports.create = async (req, res, next) => {
 };
 
 module.exports.addCourses = async (req, res, next) => {
-  const student = await Students.findById(req.params.id);
+  const student = await Students.findById(req.params.id).populate(
+    "courses.Course"
+  );
   const courses = await Courses.findOneAndUpdate(
     { Name: req.body.course },
     { $push: { students: student } }
@@ -37,7 +39,9 @@ module.exports.addCourses = async (req, res, next) => {
 };
 
 module.exports.addMark = async (req, res, next) => {
-  const student = await Students.findById(req.params.id).populate("courses.Course");
+  const student = await Students.findById(req.params.id).populate(
+    "courses.Course"
+  );
   const index = student.courses.findIndex(
     (markcourse) => markcourse.Course.Name === req.params.course
   );
