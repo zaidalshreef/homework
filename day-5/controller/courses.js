@@ -15,7 +15,7 @@ module.exports.show = async (req, res, next) => {
   res.send(course);
 };
 
-module.exports.create = async (req, res) => {
+module.exports.create = async (req, res,next)  => {
   const course = await Courses.create({
     Name: req.body.name,
   });

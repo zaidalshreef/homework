@@ -8,7 +8,7 @@ module.exports.index = async (req, res, next) => {
 };
 
 module.exports.show = async (req, res, next) => {
-  const student = await Students.findById(req.params.id).populate("Course");
+  const student = await Students.findById(req.params.id).populate("courses.Course");
   res.send(student);
 };
 

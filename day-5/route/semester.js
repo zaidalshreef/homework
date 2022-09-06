@@ -1,15 +1,16 @@
 const express = require("express");
 const router = express.Router();
+const catchAsync = require("../catchAsync");
 const {index,show,create} = require("../controller/semester")
 
 
 router
   .route("/")
-  .get(index)
-  .post(create)
+  .get(catchAsync(index))
+  .post(catchAsync(create))
 
   router
   .route("/:semester")
-  .get(show)
+  .get(catchAsync(show))
 
   module.exports = router;
